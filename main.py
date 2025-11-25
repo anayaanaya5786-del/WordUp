@@ -52,12 +52,13 @@ class WordUpApp(MDApp):
         from screens.ai_cards import AICardsScreen
 
         sm = Root()
-        sm.add_widget(LoginScreen(name="login"))
-        sm.add_widget(RegisterScreen(name="register"))
+
         sm.add_widget(HomeScreen(name="home"))
         sm.add_widget(DictionaryScreen(name="dictionary"))
         sm.add_widget(CardsScreen(name="cards"))
         sm.add_widget(AICardsScreen(name="ai_cards"))
+        sm.add_widget(LoginScreen(name="login"))
+        sm.add_widget(RegisterScreen(name="register"))
 
         from screens.profile import ProfileScreen
         sm.add_widget(ProfileScreen(name="profile"))
