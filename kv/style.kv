@@ -1,0 +1,495 @@
+#:import hex kivy.utils.get_color_from_hex
+#:import dp kivy.metrics.dp
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<Root>:
+    transition: FadeTransition(duration=.3)
+
+# ===================== ЛОГИН С КНОПКАМИ =====================
+<LoginScreen>:
+    name: "login"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: hex("#E8F5E8")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Верхняя панель с кнопками
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(56)
+            padding: [dp(16), dp(10)]
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#E8F5E8")
+
+            MDTextButton:
+                text: "Отмена"
+                text_color: hex("#2E7D32")
+                on_release: app.stop()
+
+            BoxLayout:
+                size_hint_x: 0.3
+
+            MDTextButton:
+                text: "Войти"
+                bold: True
+                font_size: dp(18)
+                text_color: hex("#2E7D32")
+                on_release: root.login()
+
+            BoxLayout:
+                size_hint_x: 0.15
+
+            MDTextButton:
+                text: "Создать аккаунт"
+                text_color: hex("#2E7D32")
+                on_release: app.root.current = "register"
+
+        Image:
+            source: "assets/koala.png"
+            size_hint: None, None
+            size: dp(150), dp(150)
+            pos_hint: {"center_x": .5, "top": .82}
+
+        MDLabel:
+            text: "WordUp"
+            font_style: "H4"
+            bold: True
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .64}
+            text_color: hex("#2E7D32")
+
+        MDTextField:
+            id: email
+            hint_text: "E-mail"
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "y": .48}
+
+        MDTextField:
+            id: password
+            hint_text: "Пароль"
+            password: True
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "y": .39}
+
+        MDRoundFlatButton:
+            text: "Войти"
+            md_bg_color: hex("#66BB6A")
+            text_color: 1,1,1,1
+            size_hint_x: .85
+            height: dp(56)
+            pos_hint: {"center_x": .5, "y": .2}
+            on_release: root.login()
+
+        MDLabel:
+            id: error_label
+            text: ""
+            color: 1,0,0,1
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .14}
+
+# ===================== РЕГИСТРАЦИЯ С КНОПКАМИ =====================
+<RegisterScreen>:
+    name: "register"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: hex("#E8F5E8")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(56)
+            padding: [dp(16), dp(10)]
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#E8F5E8")
+
+            MDTextButton:
+                text: "Отмена"
+                text_color: hex("#2E7D32")
+                on_release: app.root.current = "login"
+
+            BoxLayout:
+                size_hint_x: 0.5
+
+            MDTextButton:
+                text: "Создать аккаунт"
+                bold: True
+                font_size: dp(18)
+                text_color: hex("#2E7D32")
+                on_release: root.register()
+
+        Image:
+            source: "assets/koala.png"
+            size_hint: None, None
+            size: dp(150), dp(150)
+            pos_hint: {"center_x": .5, "top": .82}
+
+        MDLabel:
+            text: "Регистрация"
+            font_style: "H4"
+            bold: True
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .64}
+            text_color: hex("#2E7D32")
+
+        MDTextField:
+            id: email
+            hint_text: "E-mail"
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "y": .52}
+
+        MDTextField:
+            id: pwd1
+            hint_text: "Пароль"
+            password: True
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "y": .43}
+
+        MDTextField:
+            id: pwd2
+            hint_text: "Повторите пароль"
+            password: True
+            size_hint_x: .85
+            pos_hint: {"center_x": .5, "y": .34}
+
+        MDRoundFlatButton:
+            text: "Создать аккаунт"
+            md_bg_color: hex("#66BB6A")
+            text_color: 1,1,1,1
+            size_hint_x: .85
+            height: dp(56)
+            pos_hint: {"center_x": .5, "y": .2}
+            on_release: root.register()
+
+        MDLabel:
+            id: error_label
+            text: ""
+            color: 1,0,0,1
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .14}
+<HomeScreen>:
+    name: "home"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: hex("#E8F5E8")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: "assets/wordup.png"
+            size_hint: None, None
+            size: dp(141), dp(141)
+            pos_hint: {"center_x": .5, "top": 0.98}
+
+        MDLabel:
+            id: welcome
+            text: "Привет, Ануш!"
+            font_style: "H4"
+            bold: True
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .72}
+            text_color: hex("#2E7D32")
+
+        MDCard:
+            size_hint: .94, None
+            height: dp(580)
+            pos_hint: {"center_x": .5, "y": .02}
+            radius: 32
+            elevation: 15
+            md_bg_color: 1,1,1,1
+            padding: dp(25)
+
+            ScrollView:
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(22)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    MDLabel:
+                        text: "Выбери направление"
+                        font_style: "H5"
+                        halign: "center"
+                        bold: True
+                        text_color: hex("#2E7D32")
+
+                    MDRaisedButton:
+                        text: "English → Русский"
+                        md_bg_color: hex("#4CAF50")
+                        size_hint_x: .95
+                        height: dp(62)
+                        on_release: app.set_language("en-ru")
+
+                    MDRaisedButton:
+                        text: "Русский → Армянский"
+                        md_bg_color: hex("#9C27B0")
+                        size_hint_x: .95
+                        height: dp(62)
+                        on_release: app.set_language("ru-hy")
+
+                    Widget:
+                        size_hint_y: None
+                        height: dp(20)
+
+                    MDLabel:
+                        id: lang_label
+                        markup: True
+                        text: "[color=#000000]Изучаешь:[/color] [b]English → Русский[/b]"
+                        halign: "center"
+                        font_style: "H6"
+                        text_color: hex("#2E7D32")
+
+                    MDLabel:
+                        id: streak_label
+                        text: "Стрик: 0 дней • Выучено: 0 слов"
+                        halign: "center"
+                        font_style: "Subtitle1"
+
+                    MDRaisedButton:
+                        text: "Словарь"
+                        md_bg_color: hex("#2196F3")
+                        size_hint_x: .95
+                        height: dp(56)
+                        on_release: app.root.current = "dictionary"
+
+                    MDRaisedButton:
+                        text: "Карточки со свайпом"
+                        md_bg_color: hex("#FF9800")
+                        size_hint_x: .95
+                        height: dp(56)
+                        on_release: app.root.current = "cards"
+
+                    MDRaisedButton:
+                        text: "ИИ-проверка"
+                        md_bg_color: hex("#E91E63")
+                        size_hint_x: .95
+                        height: dp(56)
+                        on_release: app.root.current = "ai_cards"
+                    MDRaisedButton:
+                        text: "Профиль"
+                        md_bg_color: hex("#9C27B0")
+                        size_hint_x: .95
+                        height: dp(56)
+                        on_release: app.root.current = "profile"
+
+<DictionaryScreen>:
+    name: "dictionary"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: hex("#E8F5E8")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        MDLabel:
+            text: "Твой словарь"
+            font_style: "H4"
+            bold: True
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .88}
+            text_color: hex("#2E7D32")
+
+        MDTextField:
+            id: search_field
+            hint_text: "Поиск слова..."
+            size_hint_x: .9
+            pos_hint: {"center_x": .5, "y": .8}
+            on_text: root.search(self.text)
+
+        ScrollView:
+            size_hint: .94, .68
+            pos_hint: {"center_x": .5, "y": .05}
+            MDList:
+                id: word_list
+                padding: dp(10)
+
+        MDRoundFlatButton:
+            text: "Назад"
+            pos_hint: {"center_x": .5, "y": .02}
+            md_bg_color: hex("#66BB6A")
+            text_color: 1,1,1,1
+            on_release: app.root.current = "home"
+
+<CardsScreen>:
+    name: "cards"
+    FloatLayout:
+        MDLabel:
+            text: "Свайпай карточки!"
+            halign: "center"
+            pos_hint: {"center_y": .85}
+            font_style: "H5"
+            text_color: hex("#2E7D32")
+
+        MDCard:
+            id: card
+            size_hint: None, None
+            size: "300dp", "460dp"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            elevation: 20
+            radius: 32
+            md_bg_color: 1,1,1,1
+
+            MDLabel:
+                id: word_label
+                text: "Готов?"
+                halign: "center"
+                valign: "middle"
+                font_style: "H3"
+                markup: True
+                padding: dp(20)
+
+        MDLabel:
+            text: "[ref=left]Не знаю ←[/ref]       [ref=right]→ Знаю[/ref]"
+            markup: True
+            halign: "center"
+            pos_hint: {"center_y": .1}
+            font_style: "Caption"
+            on_ref_press: root.swipe_left() if args[1] == "left" else root.swipe_right()
+
+        MDRoundFlatButton:
+            text: "Назад"
+            pos_hint: {"center_x": .5, "y": .02}
+            on_release: app.root.current = "home"
+
+<AICardsScreen>:
+    name: "ai_cards"
+    FloatLayout:
+        MDLabel:
+            text: "ИИ-проверка"
+            halign: "center"
+            pos_hint: {"center_y": .85}
+            font_style: "H5"
+            text_color: hex("#9C27B0")
+
+        MDLabel:
+            id: word_label
+            text: "Как будет?"
+            markup: True
+            halign: "center"
+            pos_hint: {"center_y": .65}
+            font_style: "H4"
+
+        MDTextField:
+            id: answer_field
+            hint_text: "Напиши перевод..."
+            size_hint_x: .88
+            pos_hint: {"center_x": .5, "center_y": .48}
+            on_text_validate: root.check_answer()
+
+        MDRoundFlatButton:
+            text: "Проверить"
+            md_bg_color: hex("#9C27B0")
+            text_color: 1,1,1,1
+            size_hint_x: .88
+            pos_hint: {"center_x": .5, "center_y": .35}
+            on_release: root.check_answer()
+
+        MDLabel:
+            id: result_label
+            text: ""
+            markup: True
+            halign: "center"
+            pos_hint: {"center_y": .22}
+            font_style: "H6"
+
+        MDRoundFlatButton:
+            text: "Назад"
+            pos_hint: {"center_x": .5, "y": .02}
+            on_release: app.root.current = "home"
+
+<ProfileScreen>:
+    name: "profile"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: hex("#E8F5E8")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Аватарка
+        Image:
+            source: "assets/koala.png"
+            size_hint: None, None
+            size: dp(160), dp(160)
+            pos_hint: {"center_x": .5, "y": .75}
+
+        # EMAIL — СРАЗУ ПОД АВАТАРКОЙ
+        MDLabel:
+            id: user_email
+            text: "anush@gmail.com"
+            font_style: "Subtitle1"
+            bold: True
+            halign: "center"
+            pos_hint: {"center_x": .50, "y": .200}
+            font_size: dp(20)
+            theme_text_color: "Secondary"
+
+        # КНОПКА "НАЗАД" — СРАЗУ ПОД EMAIL
+        MDRoundFlatButton:
+            text: "Назад"
+            size_hint_x: .85
+            height: dp(56)
+            pos_hint: {"center_x": .5, "y": .55}
+            md_bg_color: hex("#66BB6A")
+            text_color: 1,1,1,1
+            font_style: "Button"
+            on_release: app.root.current = "home"
+
+        # КНОПКА "ВЫЙТИ ИЗ АККАУНТА" — НИЖЕ
+        MDRoundFlatButton:
+            text: "Выйти из аккаунта"
+            size_hint_x: .85
+            height: dp(56)
+            pos_hint: {"center_x": .5, "y": .42}
+            md_bg_color: hex("#F44336")
+            text_color: 1,1,1,1
+            font_style: "Button"
+            on_release: root.logout()
+
+<AdminScreen>:
+    name: "admin"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: hex("#E8F5E8")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Заголовок
+        MDLabel:
+            text: "АДМИН-ПАНЕЛЬ"
+            font_style: "H3"
+            bold: True
+            halign: "center"
+            pos_hint: {"center_x": .5, "y": .88}
+            text_color: hex("#2E7D32")
+            font_size: dp(32)
+
+        # Список пользователей
+        ScrollView:
+            size_hint: .94, .75
+            pos_hint: {"center_x": .5, "y": .05}
+            MDList:
+                id: user_list
+                padding: dp(10)
+
+        # Кнопка выхода — как везде
+        MDRoundFlatButton:
+            text: "Выйти из админки"
+            size_hint_x: .85
+            height: dp(56)
+            pos_hint: {"center_x": .5, "y": .02}
+            md_bg_color: hex("#66BB6A")
+            text_color: 1,1,1,1
+            font_style: "Button"
+            on_release: app.root.current = "home"
