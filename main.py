@@ -121,3 +121,7 @@ class WordUpApp(MDApp):
 
 if __name__ == "__main__":
     WordUpApp().run()
+
+
+class PythonProject25:
+    pass
