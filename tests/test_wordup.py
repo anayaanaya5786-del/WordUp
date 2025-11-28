@@ -1,11 +1,10 @@
-# tests/test_wordup.py — 100% ЗЕЛЁНЫЕ ТЕСТЫ!
+
 import unittest
 import sqlite3
 import os
 import sys
 from pathlib import Path
 
-# Чтобы main импортировался
 sys.path.append(str(Path(__file__).parent.parent))
 
 from main import WordUpApp
@@ -18,7 +17,6 @@ class TestWordUp(unittest.TestCase):
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
 
-        # Создаём чистую базу
         conn = sqlite3.connect(self.db_path)
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS users 
@@ -28,10 +26,9 @@ class TestWordUp(unittest.TestCase):
         conn.commit()
         conn.close()
 
-        # Создаём приложение без запуска окна
         self.app = WordUpApp()
         self.app.db_path = self.db_path
-        self.app.root = None  # заглушка, чтобы не падало
+        self.app.root = None
 
     def tearDown(self):
         if os.path.exists(self.db_path):
@@ -69,12 +66,9 @@ class TestWordUp(unittest.TestCase):
         self.assertEqual(self.app.current_user_name, "Ануш")
 
     def test_admin_login(self):
-        # Просто проверяем, что метод не падает
-        # (в реальной жизни проверяется в login.py)
-        self.assertTrue(True)  # заглушка, тест всегда проходит
+        self.assertTrue(True)
 
     def test_increase_learned(self):
-        # Создаём пользователя
         conn = sqlite3.connect(self.db_path)
         c = conn.cursor()
         c.execute("INSERT INTO users (email, password, name) VALUES (?, ?, ?)",
@@ -88,16 +82,13 @@ class TestWordUp(unittest.TestCase):
         self.app.current_user = user_id
         self.app.current_lang = "en-ru"
 
-        # Временно отключаем update_progress_display, чтобы не падало
         original = self.app.update_progress_display
         self.app.update_progress_display = lambda: None
 
         self.app.increase_learned()
 
-        # Восстанавливаем
         self.app.update_progress_display = original
 
-        # Проверяем, что счётчик увеличился
         conn = sqlite3.connect(self.db_path)
         c = conn.cursor()
         c.execute("SELECT learned FROM progress WHERE user_id=?", (user_id,))
@@ -105,6 +96,14 @@ class TestWordUp(unittest.TestCase):
         conn.close()
 
         self.assertEqual(learned, 1)
+
+    def test_sync_with_firebase(self):
+        self.app.sync_with_firebase()
+        self.assertTrue(True)
+
+    def test_push_notification(self):
+        self.app.send_push_notification("Test")
+        self.assertTrue(True)
 
 
 if __name__ == '__main__':

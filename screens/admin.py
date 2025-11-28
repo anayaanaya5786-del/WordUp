@@ -1,10 +1,9 @@
-# screens/admin.py — КРАСИВАЯ АДМИНКА + БЕЗ ОШИБОК!
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.list import TwoLineAvatarIconListItem
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRoundFlatButton
 from kivymd.app import MDApp
-from kivy.metrics import dp  # ← ЭТО НАДО ДОБАВИТЬ!
+from kivy.metrics import dp
 import sqlite3
 
 

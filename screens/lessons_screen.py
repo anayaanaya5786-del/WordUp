@@ -1,18 +1,19 @@
 from compatibility import MDRoundFlatButton
 from kivymd.uix.screen import MDScreen
-
+from kivymd.app import MDApp
 
 class LessonsScreen(MDScreen):
-    current_category = "Еда"
+    current_category = "Oxford 3000 & 5000"
 
     def on_enter(self):
         box = self.ids.lessons_box
         box.clear_widgets()
 
         lessons = {
-            "Еда": ["Фрукты", "Овощи", "Напитки"],
-            "Путешествия": ["Аэропорт", "Отель", "Транспорт"],
-        }[self.current_category]
+            "Oxford 3000 & 5000": ["A1 Words", "A2 Verbs", "B1 Idiom"],
+            "Здоровье": ["Body Parts", "Diseases", "Medicine"],
+            # Добавьте для армянского
+        }.get(self.current_category, [])
 
         for l in lessons:
             btn = MDRoundFlatButton(text=l, size_hint_y=None, height=80)
@@ -20,5 +21,7 @@ class LessonsScreen(MDScreen):
             box.add_widget(btn)
 
     def open_flashcards(self, lesson):
-        self.manager.get_screen('flashcards').load_lesson(self.current_category, lesson)
-        self.manager.current = 'flashcards'
+        app = MDApp.get_running_app()
+        flashcards_screen = app.root.get_screen('flashcards')
+        flashcards_screen.load_lesson(self.current_category, lesson)
+        app.root.current = 'flashcards'
